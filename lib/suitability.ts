@@ -27,9 +27,16 @@ export function scoreSuitability(inputs: SuitabilityInputs): SuitabilityResult {
     );
   }
 
+  const probabilityBaseline =
+    Math.max(0, inputs.precipitationProbability - 5) * 0.35;
+  if (probabilityBaseline > 0) {
+    score -= Math.min(18, probabilityBaseline);
+  }
+
   if (inputs.precipitationProbability > 35) {
-    const probabilityPenalty = ((inputs.precipitationProbability - 35) / 65) * 20;
-    score -= probabilityPenalty;
+    const heavyProbabilityPenalty =
+      ((inputs.precipitationProbability - 35) / 65) * 18;
+    score -= heavyProbabilityPenalty;
     factors.push("Elevated chance of precipitation");
   }
 
