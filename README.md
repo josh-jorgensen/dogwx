@@ -49,6 +49,17 @@ Create a `.env.local` file with these values when running locally. The email end
 
 The endpoint accepts optional `latitude`/`longitude` numbers when you want to bypass geocoding.
 
+### Hands-free cron emails
+
+If you prefer Vercel Cron to hit a GET endpoint automatically, configure the bundled `/api/cron-email` route:
+
+1. Add these environment variables in Vercel (or `.env.local` for local tests):
+   - `DOGWALK_CRON_EMAIL` – required recipient address.
+   - `DOGWALK_CRON_LOCATION` – optional location query string.
+   - `DOGWALK_CRON_LATITUDE` / `DOGWALK_CRON_LONGITUDE` – optional numeric overrides when you want to bypass geocoding entirely.
+2. Adjust `vercel.json` if you want a different schedule or path, then commit the changes.
+3. After deploying, Vercel Cron will hit `/api/cron-email` on the configured cadence and the function will send the latest forecast snapshot via Resend.
+
 ## Deployment notes
 
 - Vercel’s free tier comfortably runs this project (Next.js App Router, no databases).
